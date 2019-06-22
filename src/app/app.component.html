@@ -1,39 +1,52 @@
 <div class="container border">
-  <div>
-    <input
-      type="radio"
-      [ngModel]="col"
-      (ngModelChange)="onColChanged($event)"
-      name="col"
-      [value]="1"
-    />
-    1 column
-    <input
-      type="radio"
-      [ngModel]="col"
-      (ngModelChange)="onColChanged($event)"
-      name="col"
-      [value]="2"
-    />
-    2 column
-    <input
-      type="radio"
-      [ngModel]="col"
-      (ngModelChange)="onColChanged($event)"
-      name="col"
-      [value]="3"
-    />
-    3 column
+  <div class="d-flex justify-content-around">
+    <div>
+      <input
+        type="radio"
+        [ngModel]="col"
+        (ngModelChange)="onColChanged($event)"
+        name="col"
+        [value]="1"
+      />
+      1 column
+      <input
+        type="radio"
+        [ngModel]="col"
+        (ngModelChange)="onColChanged($event)"
+        name="col"
+        [value]="2"
+      />
+      2 column
+      <input
+        type="radio"
+        [ngModel]="col"
+        (ngModelChange)="onColChanged($event)"
+        name="col"
+        [value]="3"
+      />
+      3 column
+    </div>
+    <div>
+      <button (click)="onAddClicked()" class="btn btn-primary mr-2">Add</button>
+    </div>
   </div>
   <div class="grid">
     <div
       *ngFor="let item of listTest"
       class="item"
+      id="{{ item.id }}"
       [ngClass]="{ 'w-1': col === 1, 'w-2': col === 2, 'w-3': col === 3 }"
     >
       <div class="item-content">
         <!-- Safe zone, enter your custom markup -->
-        {{ item }}
+        <button
+          (click)="onDeleteClicked(item.id)"
+          style="right: 5px; top:5px"
+          class="btn btn-light position-absolute"
+        >
+          x
+        </button>
+        {{ item.name }}
         <!-- Safe zone ends -->
       </div>
     </div>
