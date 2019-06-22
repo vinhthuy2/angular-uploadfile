@@ -39,40 +39,46 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
     const gridEl = document.querySelector('.grid');
 
     if (this.lastCol !== this.col) {
-      console.log('changed');
       this.lastCol = this.col;
-      if (!this.grid) {
-        this.grid = new Muuri(gridEl, {
-          dragEnabled: true,
-          dragSortPredicate: {
-            threshold: 50,
-            action: 'swap'
-          }
-        });
-      } else {
+      if (this.grid) {
         this.grid.destroy();
-        this.grid = new Muuri(gridEl, {
-          dragEnabled: true,
-          dragSortPredicate: {
-            threshold: 50,
-            action: 'swap'
-          }
-        });
       }
+      this.grid = this.gridCreator(gridEl);
+
+      this.grid.on('move', data => {
+        console.log(data);
+      });
+
+      this.grid.on('layoutEnd', items => {
+        items.forEach((item, idx) => {
+          const id = item._element.id;
+          const obj = this.listTest.find(i => i.id === id);
+          obj.order = idx;
+        });
+
+        console.log(this.listTest.sort((a, b) => a.order - b.order));
+      });
     }
 
     if (this.listTest.length !== this.lastLength) {
-      console.log('list length changed');
-
       if (this.listTest.length > this.lastLength) {
         const node = document.querySelector(`#${this.latestAddedID}`);
-        console.log(node);
-
         this.grid.add([node]);
       }
       this.lastLength = this.listTest.length;
     }
   }
+
+  gridCreator(gridEl: Node) {
+    return new Muuri(gridEl, {
+      dragEnabled: true,
+      dragSortPredicate: {
+        threshold: 50,
+        action: 'swap'
+      }
+    });
+  }
+
   onColChanged(e) {
     this.lastCol = this.col;
     this.col = e;
