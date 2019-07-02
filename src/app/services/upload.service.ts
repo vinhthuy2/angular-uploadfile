@@ -22,10 +22,10 @@ export class UploadService {
           switch (event.type) {
             case HttpEventType.UploadProgress:
               const progress = Math.round((100 * event.loaded) / event.total);
-              return { status: 'progress', message: progress };
+              return { status: 'progress', progress };
 
             case HttpEventType.Response:
-              return event;
+              return event.body;
             default:
               return `Unhandled event: ${event.type}`;
           }

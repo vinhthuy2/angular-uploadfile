@@ -1,12 +1,8 @@
 <h1>Upload your Avatar!</h1>
 <div>
-  <div *ngIf="error">
-    {{ error.message }}
-  </div>
-  <div *ngIf="uploadResponse.status === 'error'">
-    {{ uploadResponse.message }}
-  </div>
-  <div *ngIf="uploadResponse.status === 'progress'">
+  <div *ngIf="error">Error {{ error.message }}</div>
+  <div *ngIf="uploadResponse.msg">Status error: {{ uploadResponse.msg }}</div>
+  <div>
     <div
       role="progressbar"
       [style.width.%]="uploadResponse.message"
@@ -23,7 +19,20 @@
     [formGroup]="form"
     (ngSubmit)="onSubmit()"
   >
-    <input type="file" name="avatar" (change)="onFileChange($event)" />
+    <input type="file" multiple name="avatar" (change)="onFileChange($event)" />
     <button type="submit">Upload</button>
   </form>
+
+  <div
+    *ngFor="let item of files"
+    class="border w-75 m-5 cont-item"
+    style="height: 100px; position: relative;"
+  >
+    {{ item.status }} {{ item.progress }}
+
+    <div
+      style="height: 3px; position: absolute; background-color: blue; bottom: 0"
+      [ngStyle]="{ width: item.progress + '%' }"
+    ></div>
+  </div>
 </div>

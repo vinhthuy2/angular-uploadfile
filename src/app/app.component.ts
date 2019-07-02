@@ -36,37 +36,32 @@ export class AppComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
   ngAfterViewInit(): void {}
   ngAfterViewChecked() {
-    const gridEl = document.querySelector('.grid');
-
-    if (this.lastCol !== this.col) {
-      this.lastCol = this.col;
-      if (this.grid) {
-        this.grid.destroy();
-      }
-      this.grid = this.gridCreator(gridEl);
-
-      this.grid.on('move', data => {
-        console.log(data);
-      });
-
-      this.grid.on('layoutEnd', items => {
-        items.forEach((item, idx) => {
-          const id = item._element.id;
-          const obj = this.listTest.find(i => i.id === id);
-          obj.order = idx;
-        });
-
-        console.log(this.listTest.sort((a, b) => a.order - b.order));
-      });
-    }
-
-    if (this.listTest.length !== this.lastLength) {
-      if (this.listTest.length > this.lastLength) {
-        const node = document.querySelector(`#${this.latestAddedID}`);
-        this.grid.add([node]);
-      }
-      this.lastLength = this.listTest.length;
-    }
+    // const gridEl = document.querySelector('.grid');
+    // if (this.lastCol !== this.col) {
+    //   this.lastCol = this.col;
+    //   if (this.grid) {
+    //     this.grid.destroy();
+    //   }
+    //   this.grid = this.gridCreator(gridEl);
+    //   this.grid.on('move', data => {
+    //     console.log(data);
+    //   });
+    //   this.grid.on('layoutEnd', items => {
+    //     items.forEach((item, idx) => {
+    //       const id = item._element.id;
+    //       const obj = this.listTest.find(i => i.id === id);
+    //       obj.order = idx;
+    //     });
+    //     console.log(this.listTest.sort((a, b) => a.order - b.order));
+    //   });
+    // }
+    // if (this.listTest.length !== this.lastLength) {
+    //   if (this.listTest.length > this.lastLength) {
+    //     const node = document.querySelector(`#${this.latestAddedID}`);
+    //     this.grid.add([node]);
+    //   }
+    //   this.lastLength = this.listTest.length;
+    // }
   }
 
   gridCreator(gridEl: Node) {
